@@ -1,0 +1,12 @@
+<%- include('../layout/header', { title: "Author Dashboard" }) %>
+<h3>Author Dashboard — <%= user.username %></h3>
+<hr>
+<p><a class="btn btn-primary" href="/posts/create">Create New Post</a></p>
+
+<h5>Your Posts</h5>
+<ul>
+  <% posts.forEach(p => { %>
+    <li><%= p.title %> — <a href="/posts/edit/<%= p._id %>">Edit</a></li>
+  <% }) %>
+</ul>
+<%- include('../layout/footer') %>

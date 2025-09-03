@@ -1,0 +1,33 @@
+
+
+<%- include('layout/header', { title: "Create Post" }) %>
+<div class="card p-4" style="max-width:720px;margin:auto">
+  <h4>Create Post</h4>
+  <% if (messages.error && messages.error.length) { %>
+    <% messages.error.forEach(m=>{ %><div class="alert alert-danger"><%= m %></div><% }) %>
+  <% } %>
+  <form action="/posts/create" method="POST" enctype="multipart/form-data">
+    <div class="mb-2">
+      <label>Title</label>
+      <input name="title" class="form-control" required>
+    </div>
+    <div class="mb-2">
+      <label>Content</label>
+      <textarea name="content" class="form-control" rows="4"></textarea>
+    </div>
+    <div class="mb-2">
+      <label>Categories (comma separated)</label>
+      <input name="categories" class="form-control">
+    </div>
+    <div class="mb-2">
+      <label>Tags (comma separated)</label>
+      <input name="tags" class="form-control">
+    </div>
+    <div class="mb-2">
+      <label>Image</label>
+      <input type="file" name="image" class="form-control">
+    </div>
+    <button class="btn btn-primary">Create</button>
+  </form>
+</div>
+<%- include('layout/footer') %>

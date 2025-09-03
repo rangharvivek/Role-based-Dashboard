@@ -1,0 +1,22 @@
+
+<%- include('../layout/header', { title: "Admin Dashboard" }) %>
+<h3>Admin Dashboard — Welcome <%= user.username %></h3>
+<hr>
+<h5>Users</h5>
+<table class="table">
+  <thead><tr><th>Name</th><th>Email</th><th>Role</th></tr></thead>
+  <tbody>
+    <% users.forEach(u => { %>
+      <tr><td><%= u.username %></td><td><%= u.email %></td><td><%= u.role %></td></tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<h5>Your Posts</h5>
+<ul>
+  <% posts.forEach(p => { %>
+    <li><%= p.title %> — by <%= p.author ? p.author.username : 'Unknown' %></li>
+  <% }) %>
+</ul>
+
+<%- include('../layout/footer') %>

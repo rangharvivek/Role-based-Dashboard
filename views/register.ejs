@@ -1,0 +1,47 @@
+<%- include('layout/header', { title: "Register" }) %>
+<link rel="stylesheet" href="/styles.css"> <!-- optional -->
+<div class="form-container">
+  <h3>Create an Account</h3>
+
+  <% if (messages.error && messages.error.length > 0) { %>
+    <% messages.error.forEach(msg => { %>
+      <div class="alert alert-danger"><%= msg %></div>
+    <% }) %>
+  <% } %>
+  <% if (messages.success && messages.success.length > 0) { %>
+    <% messages.success.forEach(msg => { %>
+      <div class="alert alert-success"><%= msg %></div>
+    <% }) %>
+  <% } %>
+
+  <form action="/register" method="POST">
+    <div class="mb-3">
+      <label class="form-label">Full Name</label>
+      <input type="text" name="username" class="form-control" placeholder="Enter your full name" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Email address</label>
+      <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Password</label>
+      <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Confirm Password</label>
+      <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm your password" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Account Type</label>
+      <select class="form-select" name="role" required>
+        <option selected disabled>Choose...</option>
+        <option value="user">User</option>
+        <option value="author">Author</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Create Account</button>
+  </form>
+  <p class="text-center mt-3 text-small">Already have an account? <a href="/login">Login</a></p>
+</div>
+<%- include('layout/footer') %>

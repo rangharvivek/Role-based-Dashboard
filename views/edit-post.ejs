@@ -1,0 +1,32 @@
+
+<%- include('layout/header', { title: "Edit Post" }) %>
+<div class="card p-4" style="max-width:720px;margin:auto">
+  <h4>Edit Post</h4>
+  <form action="/posts/edit/<%= post._id %>" method="POST" enctype="multipart/form-data">
+    <div class="mb-2">
+      <label>Title</label>
+      <input name="title" value="<%= post.title %>" class="form-control" required>
+    </div>
+    <div class="mb-2">
+      <label>Content</label>
+      <textarea name="content" class="form-control" rows="4"><%= post.content %></textarea>
+    </div>
+    <div class="mb-2">
+      <label>Categories</label>
+      <input name="categories" value="<%= post.categories ? post.categories.join(',') : '' %>" class="form-control">
+    </div>
+    <div class="mb-2">
+      <label>Tags</label>
+      <input name="tags" value="<%= post.tags ? post.tags.join(',') : '' %>" class="form-control">
+    </div>
+    <div class="mb-2">
+      <label>Current Image</label><br>
+      <% if (post.image) { %>
+        <img src="<%= post.image %>" width="140" class="mb-2">
+      <% } else { %> No Image <% } %>
+      <input type="file" name="image" class="form-control mt-2">
+    </div>
+    <button class="btn btn-success">Update</button>
+  </form>
+</div>
+<%- include('layout/footer') %>

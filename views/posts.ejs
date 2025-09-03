@@ -1,0 +1,45 @@
+
+
+
+
+<%- include('layout/header', { title: "Posts" }) %>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3>All Posts</h3>
+  <% if (currentUser && (currentUser.role === 'author' || currentUser.role === 'admin')) { %>
+    <a href="/posts/create" class="btn btn-sm btn-primary">+ New Post</a>
+  <% } %>
+</div>
+
+<% if (messages.success && messages.success.length) { %>
+  <% messages.success.forEach(m=>{ %><div class="alert alert-success"><%= m %></div><% }) %>
+<% } %>
+<% if (messages.error && messages.error.length) { %>
+  <% messages.error.forEach(m=>{ %><div class="alert alert-danger"><%= m %></div><% }) %>
+<% } %>
+
+<table class="table table-striped">
+  <thead>
+    <tr><th>Title</th><th>Author</th><th>Categories</th><th>Image</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+    <% posts.forEach(post => { %>
+      <tr>
+        <td><%= post.title %></td>
+        <td><%= post.author ? post.author.username : "Unknown" %></td>
+        <td><%= post.categories && post.categories.length ? post.categories.join(", ") : "—" %></td>
+        <td>
+          <% if (post.image) { %>
+            <img src="<%= post.image %>" width="120" alt="">
+          <% } else { %> — <% } %>
+        </td>
+        <td>
+          <a href="/posts/edit/<%= post._id %>" class="btn btn-sm btn-warning">Edit</a>
+          <a href="/posts/delete/<%= post._id %>" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<%- include('layout/footer') %>
