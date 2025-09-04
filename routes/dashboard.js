@@ -15,7 +15,6 @@ router.get("/author", ensureAuth, checkRole(["author","admin"]), async (req, res
   res.render("dashboard/author", { user: req.session.user, posts: myPosts, messages: res.locals.messages });
 });
 
-// user dashboard
 router.get("/user", ensureAuth, checkRole(["user","author","admin"]), (req, res) => {
   res.render("dashboard/user", { user: req.session.user, messages: res.locals.messages });
 });
