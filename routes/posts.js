@@ -4,12 +4,8 @@ const multer = require("multer");
 const path = require("path");
 const Post = require("../models/Post");
 
-// ✅ Session-based auth middlewares
 const { ensureAuth, checkRole } = require("../middleware/authMiddleware");
 
-// =========================
-// Multer config -> save uploads to public/uploads
-// =========================
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -22,9 +18,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// =========================
-// List all posts - everyone
-// =========================
 router.get("/", async (req, res) => {
   try {
     const posts = await Post.find()
@@ -38,16 +31,10 @@ router.get("/", async (req, res) => {
   }
 });
 
-// =========================
-// Create post form - only author & admin
-// =========================
 router.get("/create", ensureAuth, checkRole(["author", "admin"]), (req, res) => {
   res.render("create-post", { messages: res.locals.messages });
 });
 
-// =========================
-// Create post - only author & admin
-// =========================
 router.post(
   "/create",
   ensureAuth,
@@ -77,9 +64,6 @@ router.post(
   }
 );
 
-// =========================
-// Edit post form - owner or admin
-// =========================
 router.get("/edit/:id", ensureAuth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -101,9 +85,6 @@ router.get("/edit/:id", ensureAuth, async (req, res) => {
   }
 });
 
-// =========================
-// Update post - owner or admin
-// =========================
 router.post("/edit/:id", ensureAuth, upload.single("image"), async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -135,9 +116,6 @@ router.post("/edit/:id", ensureAuth, upload.single("image"), async (req, res) =>
   }
 });
 
-// =========================
-// Delete post - owner or admin
-// =========================
 router.get("/delete/:id", ensureAuth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
