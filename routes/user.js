@@ -1,14 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
-const Post = require("../models/Post"); // ✅ Import Post model
+const Post = require("../models/Post"); 
 
-// ✅ Middlewares for session auth
 const { ensureAuth, checkRole } = require("../middleware/authMiddleware");
 
-// =========================
-//  Register
-// =========================
 router.get("/register", (req, res) => {
   res.render("register");
 });
@@ -41,9 +37,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// =========================
-//  Login
-// =========================
 router.get("/login", (req, res) => {
   res.render("login");
 });
@@ -74,9 +67,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// =========================
-//  Dashboard - role-based
-// =========================
 router.get("/dashboard", ensureAuth, async (req, res) => {
   const user = req.session.user;
 
@@ -101,9 +91,6 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
     res.render("dashboard/user", { user });
   }
 });
-// =========================
-//  Logout
-// =========================
 router.get("/logout", (req, res) => {
   req.session.destroy(err => {
     if (err) return res.redirect("/dashboard");
