@@ -13,7 +13,6 @@ router.post("/register", async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
 
-    // case-insensitive email check
     let user = await User.findOne({ email: email.toLowerCase() });
     if (user) {
       req.flash("error", "Email already exists");
@@ -22,7 +21,7 @@ router.post("/register", async (req, res) => {
 
     user = new User({
       username,
-      email: email.toLowerCase(), // ✅ lowercase
+      email: email.toLowerCase(),
       password,
       role: role || "user",
     });
@@ -51,7 +50,7 @@ router.post("/login", async (req, res) => {
       return res.redirect("/login");
     }
 
-    const isMatch = await user.matchPassword(password); // schema method
+    const isMatch = await user.matchPassword(password);
     if (!isMatch) {
       req.flash("error", "Invalid credentials");
       return res.redirect("/login");
@@ -72,13 +71,10 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
 
   if (user.role === "admin") {
     try {
-      // fetch all users
       const users = await User.find().select("-password");
 
-      // fetch all posts with author populated
       const posts = await Post.find().populate("author", "username").sort({ createdAt: -1 });
 
-      // render admin dashboard with users and posts
       res.render("dashboard/admin", { user, users, posts });
     } catch (err) {
       console.error(err);
