@@ -14,7 +14,6 @@ mongoose.connect(process.env.MONGO_URI, {
 }).then(()=>console.log("✅ MongoDB connected"))
 .catch(err=>console.log("MongoDB err:", err.message));
 
-// middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -41,7 +40,6 @@ app.use((req, res, next) => {
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// routes
 app.use("/", require("./routes/user"));
 const postsRouter = require("./routes/posts");
 app.use("/posts", postsRouter);
