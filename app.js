@@ -17,7 +17,6 @@ mongoose.connect(process.env.MONGO_URI, {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// static (serve uploads and public files)
 app.use("/uploads", express.static(path.join(__dirname,  "uploads")));
 
 app.use(session({
