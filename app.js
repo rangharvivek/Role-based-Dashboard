@@ -8,7 +8,6 @@ const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
 
-// DB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -30,7 +29,6 @@ app.use(session({
 }));
 app.use(flash());
 
-// set locals for flash & user
 app.use((req, res, next) => {
   res.locals.messages = {
     success: req.flash("success"),
@@ -40,7 +38,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// view engine
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -50,9 +47,7 @@ const postsRouter = require("./routes/posts");
 app.use("/posts", postsRouter);
 app.use("/dashboard", require("./routes/dashboard"));
 
-// homepage redirect
 app.get("/", (req, res) => res.redirect("/posts"));
 
-// start
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, ()=>console.log(`🚀 Server running on http://localhost:${PORT}`));
