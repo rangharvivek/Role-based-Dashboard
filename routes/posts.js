@@ -9,8 +9,7 @@ const { ensureAuth, checkRole } = require("../middleware/authMiddleware");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/"); // relative to project root
-  },
+    cb(null, "uploads/");   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname));
   }
