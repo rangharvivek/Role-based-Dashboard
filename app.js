@@ -20,7 +20,6 @@ app.use(express.json());
 // static (serve uploads and public files)
 app.use("/uploads", express.static(path.join(__dirname,  "uploads")));
 
-// sessions & flash
 app.use(session({
   secret: process.env.SESSION_SECRET || "secret",
   resave: false,
